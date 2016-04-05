@@ -18,4 +18,20 @@ class ApiController extends Controller {
 		];
 		return new DataResponse($items);
 	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param string $title the title of the item
+	 * @param string $text the text of the item
+	 * @return DataResponse
+	 */
+	function post($title, $text) {
+		$item = [
+			'id' => 4,
+			'title' => $title,
+			'text' => $text,
+		];
+		return new DataResponse($item);
+	}
 }

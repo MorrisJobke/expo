@@ -1,3 +1,13 @@
-#item-list {
+#content * {
+	box-sizing: border-box;
+}
+
+#item-list,
+#new-item {
 	padding: 5px 10px;
+}
+
+#new-item > *{
+	display: block;
+	width: 300px;
 }
