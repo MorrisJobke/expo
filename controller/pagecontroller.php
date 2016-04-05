@@ -3,7 +3,7 @@
 namespace OCA\Expo\Controller;
 
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\TemplateResponse;
 
 class PageController extends Controller {
 
@@ -12,6 +12,6 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	function index() {
-		return new DataResponse(['data' => 'example']);
+		return new TemplateResponse('expo', 'index');
 	}
 }
