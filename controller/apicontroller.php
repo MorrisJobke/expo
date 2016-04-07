@@ -32,14 +32,26 @@ class ApiController extends Controller {
 	}
 
 	/**
+	 * Convert Item objects to their array representation. Item[] to array[]
+	 *
+	 * @param Item[] $items items that should be converted
+	 * @return array[] items mapped to their array representation
+	 */
+	private function itemsToArray(array $items) {
+		$items = array_map(function(Item $item){
+			return $item->toArray();
+		}, $items);
+		return $items;
+	}
+
+	/**
 	 * @NoAdminRequired
+	 *
+	 * @return DataResponse
 	 */
 	function get() {
-		$items = [
-			['id' => 1, 'title' => 'Entry number 1', 'text' => 'This is a very basic text.'],
-			['id' => 2, 'title' => 'The second entry', 'text' => 'Here is already a bit more text listed.'],
-			['id' => 3, 'title' => 'The last of the first three', 'text' => 'The last post is always the best one ;).'],
-		];
+		$items = $this->itemMapper->findByUser($this->userId);
+		$items = $this->itemsToArray($items);
 		return new DataResponse($items);
 	}
 
