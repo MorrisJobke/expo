@@ -2,10 +2,34 @@
 
 namespace OCA\Expo\Controller;
 
+use OCA\Expo\Db\Item;
+use OCA\Expo\Db\ItemMapper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class ApiController extends Controller {
+
+	/** @var ItemMapper mapper for item entity */
+	protected $itemMapper;
+	/** @var string user ID */
+	protected $userId;
+
+	/**
+	 * constructor of the controller
+	 * @param string $appName the name of the app
+	 * @param IRequest $request an instance of the request
+	 * @param ItemMapper $itemMapper mapper for item entity
+	 * @param string $userId user id
+	 */
+	function __construct($appName,
+								IRequest $request,
+								ItemMapper $itemMapper,
+								$userId) {
+		parent::__construct($appName, $request);
+		$this->itemMapper = $itemMapper;
+		$this->userId = $userId;
+	}
 
 	/**
 	 * @NoAdminRequired
@@ -27,11 +51,12 @@ class ApiController extends Controller {
 	 * @return DataResponse
 	 */
 	function post($title, $text) {
-		$item = [
-			'id' => 4,
-			'title' => $title,
-			'text' => $text,
-		];
-		return new DataResponse($item);
+		$item = new Item();
+		$item->setTitle($title);
+		$item->setText($text);
+		$item->setUserId($this->userId);
+
+		$item = $this->itemMapper->insert($item);
+		return new DataResponse($item->toArray());
 	}
 }

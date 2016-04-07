@@ -19,4 +19,17 @@ class Item extends Entity {
 	protected $title;
 	protected $text;
 	protected $userId;
+
+	/**
+	 * Creates an array that represents the item in array format
+	 *
+	 * @return array item representation as array
+	 */
+	function toArray() {
+		return [
+			'id' => $this->getId(),
+			'title' => $this->getTitle(),
+			'text' => $this->getText()
+		];
+	}
 }
